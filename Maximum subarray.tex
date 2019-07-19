@@ -1,0 +1,59 @@
+\documentclass{article}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{CJK}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\begin{document}
+    \begin{CJK*}{UTF8}{gkai}
+        \begin{algorithm}
+            \caption{MERGE SORT}
+            \begin{algorithmic}[1]
+                \Require $A$: Array with $n$ elements
+                \Ensure index corresponding to the minimum and maximum
+                \Function{Maximum Subarray}{$A,low,high$}
+                    \If{$low=high$}
+                        \State \Return{$low,high,A[low]$}
+                    \EndIf
+                    \State $mid = (low + high) / 2$
+                    \State $(left\ low,left\ high,left\ sum) \gets $\Call{Maximum Subarray}{$A,low,mid$}
+                    \State $(right\ low,right\ high,right\ sum) \gets $\Call{Maximum Subarray}{$A,mid + 1,high$}
+                    \State $(cross\ low,cross\ high,cross\ sum) \gets $\Call{Cross}{$A,low,mid,high$}                    
+                    \If{$left\ sum \geq right\ sum$ and $left\ sum \geq cross\ sum$}
+                        \State \Return{$(left\ low,left\ high,left\ sum)$}
+                    \ElsIf{$right\ sum \geq left\ sum$ and $right\ sum \geq cross\ sum$}
+                        \State \Return{$(right\ low,right\ high,right\ sum)$}
+                    \Else
+                        \State \Return{$(cross\ low,cross\ high,cross\ sum)$}
+                    \EndIf
+                \EndFunction
+                \\
+                \Function{Cross}{$A,low,mid,high$}
+                    \State $left\ sum \gets - \infty$
+                    \State $sum \gets 0$
+                    \For{$i \gets mid $ down to $low$}
+                        \State $sum \gets sum + A[i]$    
+                        \If{$sum>left\ sum$}
+                            \State $left\ sum \gets sum$
+                            \State $max\ left \gets i$
+                        \EndIf
+                    \EndFor
+                    \State $right\ sum \gets - \infty$
+                    \State $sum \gets 0$
+                    \For{$i \gets mid + 1 $ to $high$}
+                        \State $sum \gets sum + A[i]$    
+                        \If{$sum>right\ sum$}
+                            \State $right\ sum \gets sum$
+                            \State $max\ right \gets i$
+                        \EndIf
+                    \EndFor
+                    \Return{$max\ left,max\ right,left\ sum+right\ sum$}
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+    \end{CJK*}
+\end{document}
+
+
