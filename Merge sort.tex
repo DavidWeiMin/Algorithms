@@ -1,0 +1,54 @@
+\documentclass{article}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{CJK}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+
+\begin{document}
+    \begin{CJK*}{UTF8}{gkai}
+        \begin{algorithm}
+            \caption{MERGE SORT}
+            \begin{algorithmic}[1]
+                \Require $A$: Array with $n$ elements
+                \Ensure Ascending Array
+                \Function{MergeSort}{$A,p,r$}
+                    \If{$p<r$}
+                        \State $q \gets \lfloor (p+r)/2 \rfloor$
+                        \State \Call{MergeSort}{$A,p,q$}
+                        \State \Call{MergeSort}{$A,q + 1,r$}
+                        \State \Call{Merge}{$A,p,q,r$}
+                    \EndIf
+                \EndFunction
+                \\
+                \Function{Merge}{$A,p,q,r$}
+                    \State $n_1 \gets q - p + 1$
+                    \State $n_2 \gets r - q$
+                    \State create arrays $L[1 \dots n_1 + 1]$ and $R[1 \dots n_2 + 1]$
+                    \For{$i \gets 1 $ to $ n_1$}
+                        \State $L[i] \gets A[p+i-1]$
+                    \EndFor
+                    \For{$j \gets 1 $ to $ n_1$}
+                        \State $R[j] \gets A[q+j]$
+                    \EndFor
+                    \State $L[n_1 + 1] \gets \infty$
+                    \State $R[n_2 + 1] \gets \infty$
+                    \State $i \gets 1$
+                    \State $j \gets 1$
+                    \For{$k \gets p$ to $r$}
+                        \If{$L[i] \leq R[j]$}
+                            \State $A[k] \gets L[i]$
+                            \State $i \gets i + 1$
+                        \Else
+                            \State $A[k] \gets R[j]$
+                            \State $j \gets j + 1$
+                        \EndIf
+                    \EndFor
+                \EndFunction
+            \end{algorithmic}
+        \end{algorithm}
+    \end{CJK*}
+\end{document}
+
+
